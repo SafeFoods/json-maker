@@ -126,7 +126,7 @@ static int escape( int ch ) {
 static char* atoesc( char* dest, char const* src, int len ) {
     int i;
     for( i = 0; src[i] != '\0' && ( i < len || 0 > len ); ++dest, ++i ) {
-        if ( src[i] >= ' ' && src[i] != '\"' && src[i] != '\\' && src[i] != '/' )
+        if ( src[i] < 0 || (src[i] >= ' ' && src[i] != '\"' && src[i] != '\\' && src[i] != '/' )) // Allow characters outside ascii range
             *dest = src[i];
         else {
             *dest++ = '\\';
