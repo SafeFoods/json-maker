@@ -23,6 +23,8 @@
 
 */
 
+#include <stddef.h>
+
 #ifndef MAKE_JSON_H
 #define	MAKE_JSON_H
 
@@ -37,28 +39,28 @@ extern "C" {
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @return Pointer to the new end of JSON under construction. */
-char* json_objOpen( char* dest, char const* name );
+char* json_objOpen( char* dest, char const* name, size_t* remLen );
 
 /** Close a JSON object in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @return Pointer to the new end of JSON under construction. */
-char* json_objClose( char* dest );
+char* json_objClose( char* dest, size_t* remLen );
 
 /** Used to finish the root JSON object. After call json_objClose().
   * @param dest Pointer to the end of JSON under construction.
   * @return Pointer to the new end of JSON under construction. */
-char* json_end( char* dest );
+char* json_end( char* dest, size_t* remLen );
 
 /** Open an array in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @return Pointer to the new end of JSON under construction. */
-char* json_arrOpen( char* dest, char const* name );
+char* json_arrOpen( char* dest, char const* name, size_t* remLen );
 
 /** Close an array in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @return Pointer to the new end of JSON under construction. */
-char* json_arrClose( char* dest );
+char* json_arrClose( char* dest, size_t* remLen );
 /** Add a text property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
@@ -66,7 +68,7 @@ char* json_arrClose( char* dest );
   *              Backslash escapes will be added for special characters.
   * @param len Max length of value. < 0 for unlimit.  
   * @return Pointer to the new end of JSON under construction. */  
-char* json_nstr( char* dest, char const* name, char const* value, int len );
+char* json_nstr( char* dest, char const* name, char const* value, int len, size_t* remLen );
 
 /** Add a text property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
@@ -74,8 +76,8 @@ char* json_nstr( char* dest, char const* name, char const* value, int len );
   * @param value A valid null-terminated string with the value.
   *              Backslash escapes will be added for special characters.
   * @return Pointer to the new end of JSON under construction. */
-static inline char* json_str( char* dest, char const* name, char const* value ) {
-    return json_nstr( dest, name, value, -1 );  
+static inline char* json_str( char* dest, char const* name, char const* value, size_t* remLen ) {
+    return json_nstr( dest, name, value, -1, remLen );  
 }
 
 /** Add a boolean property in a JSON string.
@@ -83,55 +85,55 @@ static inline char* json_str( char* dest, char const* name, char const* value ) 
   * @param name Pointer to null-terminated string or null for unnamed.
   * @param value Zero for false. Non zero for true.
   * @return Pointer to the new end of JSON under construction. */
-char* json_bool( char* dest, char const* name, int value );
+char* json_bool( char* dest, char const* name, int value, size_t* remLen );
 
 /** Add a null property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @return Pointer to the new end of JSON under construction. */
-char* json_null( char* dest, char const* name );
+char* json_null( char* dest, char const* name, size_t* remLen );
 
 /** Add an integer property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @param value Value of the property.
   * @return Pointer to the new end of JSON under construction. */
-char* json_int( char* dest, char const* name, int value );
+char* json_int( char* dest, char const* name, int value, size_t* remLen );
 
 /** Add an unsigned integer property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @param value Value of the property.
   * @return Pointer to the new end of JSON under construction. */
-char* json_uint( char* dest, char const* name, unsigned int value );
+char* json_uint( char* dest, char const* name, unsigned int value, size_t* remLen );
 
 /** Add a long integer property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @param value Value of the property.
   * @return Pointer to the new end of JSON under construction. */
-char* json_long( char* dest, char const* name, long int value );
+char* json_long( char* dest, char const* name, long int value, size_t* remLen );
 
 /** Add an unsigned long integer property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @param value Value of the property.
   * @return Pointer to the new end of JSON under construction. */
-char* json_ulong( char* dest, char const* name, unsigned long int value );
+char* json_ulong( char* dest, char const* name, unsigned long int value, size_t* remLen );
 
 /** Add a long long integer property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @param value Value of the property.
   * @return Pointer to the new end of JSON under construction. */
-char* json_verylong( char* dest, char const* name, long long int value );
+char* json_verylong( char* dest, char const* name, long long int value, size_t* remLen );
 
 /** Add a double precision number property in a JSON string.
   * @param dest Pointer to the end of JSON under construction.
   * @param name Pointer to null-terminated string or null for unnamed.
   * @param value Value of the property.
   * @return Pointer to the new end of JSON under construction. */
-char* json_double( char* dest, char const* name, double value );
+char* json_double( char* dest, char const* name, double value, size_t* remLen );
 
 /** @ } */
 
