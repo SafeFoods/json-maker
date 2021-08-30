@@ -308,8 +308,8 @@ char* funcname( char* dest, char const* name, type value, size_t* remLen  ) {   
         }                           \
         else                        \
         {                           \
-            dest += (n + 1);              \
-            *remLen -= (n + 1);           \
+            dest += n;              \
+            *remLen -= n;           \
         }                           \
     }                               \
     dest = chtoa( dest, ',', remLen );                                  \
