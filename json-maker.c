@@ -25,6 +25,7 @@
 
 #include <stddef.h> // For NULL
 #include "json-maker.h"
+#include "system/debug/sys_debug.h"
 
 /** Add a character at the end of a string.
   * @param dest Pointer to the null character of the string
@@ -294,11 +295,28 @@ char* json_double( char* dest, char const* name, double value ) {
 
 #define json_num( funcname, type, fmt )                         \
 char* funcname( char* dest, char const* name, type value, size_t* remLen  ) {    \
+    char* start = dest;                                             \
+    size_t startLen = *remLen; \
     dest = primitivename( dest, name, remLen );                         \
-    dest += snprintf( dest, *remLen, fmt, value );                        \
+    int n = snprintf( dest, *remLen, fmt, value );          \
+    if (n != -1)                        \
+    {                           \
+        if (n > *remLen)        \
+        {                       \
+            dest += *remLen;        \
+            *remLen = 0;            \
+        }                           \
+        else                        \
+        {                           \
+            dest += (n + 1);              \
+            *remLen -= (n + 1);           \
+        }                           \
+    }                               \
     dest = chtoa( dest, ',', remLen );                                  \
+    if (strlen(start) != startLen - *remLen)                \
+        SYS_DEBUG_BreakPoint(); \
     return dest;                                                \
-}
+}           
 
 #define X( name, type, fmt ) json_num( name, type, fmt )
 ALL_TYPES
