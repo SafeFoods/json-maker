@@ -119,7 +119,7 @@ static int escape( int ch ) {
     int i;
     static struct { char code; char ch; } const pair[] = {
         { '\"', '\"' }, { '\\', '\\' }, { '/',  '/'  }, { 'b',  '\b' },
-        { 'f',  '\f' }, { 'n',  '\n' }, { 'r',  '\r' }, { 't',  '\t' },
+        { 'f',  '\f' }, { 'n',  '\n' }, { 'r',  '\r' }, { 't',  '\t' }, { '°', '\xb0' }
     };
     for( i = 0; i < sizeof pair / sizeof *pair; ++i )
         if ( ch == pair[i].ch )
