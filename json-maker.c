@@ -119,7 +119,7 @@ static int escape( int ch ) {
     int i;
     static struct { char code; char ch; } const pair[] = {
         { '\"', '\"' }, { '\\', '\\' }, { '/',  '/'  }, { 'b',  '\b' },
-        { 'f',  '\f' }, { 'n',  '\n' }, { 'r',  '\r' }, { 't',  '\t' }, { '°', '\xb0' }
+        { 'f',  '\f' }, { 'n',  '\n' }, { 'r',  '\r' }, { 't',  '\t' },
     };
     for( i = 0; i < sizeof pair / sizeof *pair; ++i )
         if ( ch == pair[i].ch )
@@ -135,7 +135,7 @@ static int escape( int ch ) {
 static char* atoesc( char* dest, char const* src, int len, size_t* remLen  ) {
     int i;
     for( i = 0; src[i] != '\0' && ( i < len || 0 > len ) && *remLen != 0; ++dest, ++i, --*remLen ) {
-        if ( src[i] < 0 || (src[i] >= ' ' && src[i] != '\"' && src[i] != '\\' && src[i] != '/' )) // Allow characters outside ascii range
+        if ( src[i] >= ' ' && src[i] != '\"' && src[i] != '\\' && src[i] != '/' )
             *dest = src[i];
         else {
             if (*remLen != 0) {
@@ -161,10 +161,7 @@ static char* atoesc( char* dest, char const* src, int len, size_t* remLen  ) {
                         --*remLen;
                         *dest++ = nibbletoch( src[i] / 16 );
                     }
-                    if (*remLen != 0) {
-                        --*remLen;
-                        *dest++ = nibbletoch( src[i] );
-                    }
+                    *dest = nibbletoch( src[i] );
                 }
             }
         }
