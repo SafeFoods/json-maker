@@ -135,6 +135,13 @@ char* json_verylong( char* dest, char const* name, long long int value, size_t* 
   * @return Pointer to the new end of JSON under construction. */
 char* json_double( char* dest, char const* name, double value, size_t* remLen );
 
+/** Add a double precision number property in a JSON string. (Same as above but more decimals for something like GPS)
+  * @param dest Pointer to the end of JSON under construction.
+  * @param name Pointer to null-terminated string or null for unnamed.
+  * @param value Value of the property.
+  * @return Pointer to the new end of JSON under construction. */
+char* json_doubleExtra( char* dest, char const* name, double value, size_t* remLen );
+
 /** @ } */
 
 #ifdef	__cplusplus
